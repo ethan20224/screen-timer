@@ -27,13 +27,6 @@ enum HeatmapLayout {
     }
 
     static func color(forSeconds seconds: Int) -> Color {
-        let hours = Double(seconds) / 3600.0
-        switch hours {
-        case ..<0.01: return Color.gray.opacity(0.15)
-        case ..<2: return Color.green.opacity(0.3)
-        case ..<4: return Color.green.opacity(0.55)
-        case ..<6: return Color.green.opacity(0.75)
-        default: return Color.green.opacity(1.0)
-        }
+        DesignTokens.heatmapColor(forSeconds: seconds)
     }
 }

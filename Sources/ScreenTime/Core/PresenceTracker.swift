@@ -21,7 +21,9 @@ final class PresenceTracker: ObservableObject {
         persistEveryTicks: Int = 2,
         clock: @escaping () -> Date = Date.init,
         idleSecondsProvider: @escaping () -> TimeInterval = {
-            CGEventSource.secondsSinceLastEventType(.combinedSessionState, eventType: .null)
+            // kCGAnyInputEventType — time since ANY input (key/mouse). `.null` never fires,
+            // so it returned an ever-growing value and every tick looked idle.
+            CGEventSource.secondsSinceLastEventType(.combinedSessionState, eventType: CGEventType(rawValue: ~0)!)
         }
     ) {
         self.store = store
