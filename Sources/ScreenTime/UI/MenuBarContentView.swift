@@ -15,7 +15,11 @@ struct MenuBarContentView: View {
 
             Toggle("Open at Login", isOn: $loginItemEnabled)
                 .onChange(of: loginItemEnabled) { _, newValue in
-                    try? LoginItemManager.setEnabled(newValue)
+                    do {
+                        try LoginItemManager.setEnabled(newValue)
+                    } catch {
+                        loginItemEnabled = LoginItemManager.isEnabled
+                    }
                 }
 
             Divider()
